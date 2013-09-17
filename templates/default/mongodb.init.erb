@@ -35,12 +35,10 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DESC=database
 DAEMON=/usr/bin/mongod
 
-NAME=<%= @provides %>
-PIDFILE=/var/run/$NAME.pid
-DAEMON_OPTS="--config /etc/mongodb.conf --pidfilepath $PIDFILE"
-
 ENABLE_MONGODB=yes
 
+NAME=<%= @provides %>
+DAEMON_OPTS="--config /etc/mongodb.conf"
 
 <% if %w{ ubuntu debian }.include? node.platform -%>
 ulimit -f <%= node.mongodb.ulimit.file_size %>
@@ -56,6 +54,8 @@ if [ -f /etc/default/$NAME ] ; then
 	. /etc/default/$NAME
 fi
 
+PIDFILE=/var/run/$NAME.pid
+DAEMON_OPTS="$DAEMON_OPTS --pidfilepath $PIDFILE"
 
 if test ! -x $DAEMON; then
     echo "Could not find $DAEMON"
@@ -67,6 +67,7 @@ if test "x$ENABLE_MONGODB" != "xyes"; then
 fi
 
 . /lib/lsb/init-functions
+
 
 STARTTIME=1
 DIETIME=10                  # Time to wait for the server to die, in seconds
