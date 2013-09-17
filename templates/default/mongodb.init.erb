@@ -163,10 +163,12 @@ case "$1" in
                 log_end_msg 0
             else
                 # It is not running after we did start
+                log_daemon_msg "Server is not running after start"
                 log_end_msg 1
             fi
         else
             # Either we could not start it
+            log_daemon_msg "We could not start server"
             log_end_msg 1
         fi
 	;;
