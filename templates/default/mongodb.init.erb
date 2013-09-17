@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 #
 ### BEGIN INIT INFO
 # Provides:          <%= @provides %>
@@ -46,7 +46,7 @@ ulimit -t <%= node.mongodb.ulimit.cpu_time %>
 ulimit -v <%= node.mongodb.ulimit.virtual_memory %>
 ulimit -n <%= node.mongodb.ulimit.open_files %>
 ulimit -m <%= node.mongodb.ulimit.memory_size %>
-ulimit -u <%= node.mongodb.ulimit.processes %>
+ulimit -p <%= node.mongodb.ulimit.processes %>
 <% end -%>
 
 # Include mongodb defaults if available
