@@ -55,7 +55,6 @@ if [ -f /etc/default/$NAME ] ; then
 fi
 
 PIDFILE=/var/run/$NAME.pid
-DAEMON_OPTS="$DAEMON_OPTS --pidfilepath $PIDFILE"
 
 if test ! -x $DAEMON; then
     echo "Could not find $DAEMON"
@@ -109,6 +108,7 @@ running() {
 start_server() {
 # Start the process using the wrapper
             start-stop-daemon --background --start --quiet \
+            		--pidfile $PIDFILE --make-pidfile \
                         --chuid $DAEMONUSER \
                         --exec $DAEMON -- $DAEMON_OPTS
             errcode=$?
